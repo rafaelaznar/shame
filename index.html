@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shame</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+        integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: monospace;
+            margin: 5em;
+        }
+        h1 {
+            color: blue;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Shame</h1>
+    <h3>Shame gets hash code for your input text.</h3>
+    <p>All process is carried out in your browser.</p>
+    <p>No warranty.</p>
+    <label for="input">Input:</label>
+    <input type="text" id="input" name="input" value="Hello World!" size="100"><br><br>
+    <table>
+        <tr>
+            <td>LENGTH:</td>
+            <td><span id="il"></span></td>
+        </tr>
+        <tr>
+            <td>MD5(*):</td>
+            <td><span id="md5"></span></td>
+        </tr>
+        <tr>
+            <td>SHA1(160)(*):</td>
+            <td><span id="sha160"></span></td>
+        </tr>
+        <tr>
+            <td>SHA256:</td>
+            <td><span id="sha256"></span></td>
+        </tr>
+        <tr>
+            <td>SHA512:</td>
+            <td><span id="sha512"></span></td>
+        </tr>
+        <tr>
+            <td>SHA3:</td>
+            <td><span id="sha3"></span></td>
+        </tr>
+    </table>
+    <p>(*) MD5 and SHA1 are not recommended for security.</p>
+    <script>
+        let calculation = function () {
+            let inputText = document.getElementById('input').value;
+            if (!inputText) {
+                document.getElementById('il').textContent = '';
+                document.getElementById('md5').textContent = '';
+                document.getElementById('sha160').textContent = '';
+                document.getElementById('sha256').textContent = '';
+                document.getElementById('sha512').textContent = '';
+                document.getElementById('sha3').textContent = '';
+            } else {
+                document.getElementById('il').textContent = inputText.length;
+                document.getElementById('md5').textContent = CryptoJS.MD5(inputText);
+                document.getElementById('sha160').textContent = CryptoJS.SHA1(inputText);
+                document.getElementById('sha256').textContent = CryptoJS.SHA256(inputText);
+                document.getElementById('sha512').textContent = CryptoJS.SHA512(inputText);
+                document.getElementById('sha3').textContent = CryptoJS.SHA3(inputText);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector("#input").addEventListener("keyup", function (e) {
+                calculation();
+            })
+            calculation();
+        });
+    </script>
+
+</body>
+
+</html>
