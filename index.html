@@ -12,6 +12,7 @@
             font-family: monospace;
             margin: 5em;
         }
+
         h1 {
             color: blue;
             margin-bottom: 50px;
@@ -53,6 +54,13 @@
         </tr>
     </table>
     <p>(*) MD5 and SHA1 are not recommended for security.</p>
+    <br>
+    <h3>Generate random 256 bits number.</h3>
+    <p>bin 256 bits number: <span id="random256b" style="font-size: xx-small;"></span></p>
+    <p>dec 256 bits number: <span id="random256d"></span></p>
+    <p>hex 256 bits number: <span id="random256h"></span></p>
+    <button>Generate new number</button>
+
     <script>
         let calculation = function () {
             let inputText = document.getElementById('input').value;
@@ -63,6 +71,7 @@
                 document.getElementById('sha256').textContent = '';
                 document.getElementById('sha512').textContent = '';
                 document.getElementById('sha3').textContent = '';
+
             } else {
                 document.getElementById('il').textContent = inputText.length;
                 document.getElementById('md5').textContent = CryptoJS.MD5(inputText);
@@ -72,11 +81,31 @@
                 document.getElementById('sha3').textContent = CryptoJS.SHA3(inputText);
             }
         }
+        let getNumber = function () {
+            let str = '';
+            while (str.length < 256) {
+                str += Math.round(Math.random()).toString();
+            }
+            return str;
+        }
+        let generate256 = function () {
+            let snum = getNumber();
+            let bint = BigInt('0b' + snum);
+            let hex = bint.toString(16);
+            document.getElementById("random256d").textContent = bint;
+            document.getElementById("random256h").textContent = hex;
+            document.getElementById("random256b").textContent = snum;
+        }
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("#input").addEventListener("keyup", function (e) {
                 calculation();
             })
             calculation();
+            //--
+            document.querySelector("button").addEventListener("click", function (e) {
+                generate256();
+            })
+            generate256();
         });
     </script>
 
